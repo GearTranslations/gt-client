@@ -1,0 +1,19 @@
+{
+	"status": 200,
+	"data": {
+		"id": 18246,
+		"name": "translate-files-en.json",
+		"created_at": "2021-08-16T12:44:07.299+01:00",
+		"finished_date": null,
+		"family_project_state": "in_process",
+		"progress": 77.96,
+		"paid": false,
+		"price": null,
+		"urgent": false,
+		"language_from": "es",
+		"language_to": "en-uk",
+		"package_name": "T",
+		"original_file": "https://staging.geartranslations.com//uploads/document/file/29577/translate-files-en.json",
+		"translated_file": "https://staging.geartranslations.com//documents/18246/translated"
+	}
+}

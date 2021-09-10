@@ -1,0 +1,62 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/schema.rb
+    - db/migrate/**/*
+    - bin/*
+    - vendor/**/*
+    - tmp/*
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+  IgnoreCopDirectives: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - Gemfile
+    - db/seeds.rb
+    - spec/**/*
+    - config/initializers/*.rb
+    - config/environments/*.rb
+    - config/routes.rb
+
+Style/EachWithObject:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+RSpec/Focus:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Rails/Delegate: # Rule disabled because it makes the code non-greppable
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NestedGroups:
+  Max: 5

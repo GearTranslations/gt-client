@@ -1,0 +1,14 @@
+geartranslations:
+  tag: "URGENT"
+  access_token: 'accesstoken'
+  sources:
+    - file: 
+        name: locales/fr.json
+        locale: 'fr'
+        aligned_from: 'es'
+        format: 'json'
+    - file: 
+        name: locales/en.json
+        locale: 'en-uk'
+        aligned_from: 'es'
+        format: 'json'

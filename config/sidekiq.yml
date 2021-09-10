@@ -1,0 +1,26 @@
+:concurrency: <%= ENV['SIDEKIQ_CONCURRENCY'] || 5 %>
+:queues:
+  - repositories
+  - projects
+  - pull_requests
+:schedule:
+  scan_repositories:
+    cron: '0 21 * * * UTC'
+    class: Repositories::Workers::ScanRepositories
+    description: 'This process generates jobs for each repository'
+  process_projects:
+    cron: '0 * * * * UTC'
+    class: Projects::Workers::ProcessProjects
+    description: 'This process generates jobs for each open project'
+  check_status_projects:	
+    cron: '*/20 * * * *'
+    class: Projects::Workers::CheckStatusProjects
+    description: 'This process generates jobs for each processing project'
+  # waiting_projects:
+  #   cron: '*/25 * * * *'
+  #   class: Projects::Workers::WaitingProjects
+  #   description: 'This process tries to move the projects waiting to open'
+  check_pull_request:
+    cron: '*/25 * * * *'
+    class: Repositories::Workers::CheckPullRequests
+    description: 'This process checks the status of the pull requests created'

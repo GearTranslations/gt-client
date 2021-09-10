@@ -1,0 +1,63 @@
+version: '3.6'
+services:
+  gt-api-client:
+    build: .
+    command: /bin/sh -c "bundle exec rake db:create db:migrate db:seed && bundle exec puma -C config/puma.rb"
+    ports:
+      - 3000:3000
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DATABASE_HOST=postgres.db
+      - DATABASE_PORT=5432
+      - ENCRYPTION_KEY=bc68d47aa1f2103e37cbdd11ae87965d5f6336bc79f35982dfaa385fdf0b7645 # 64 bits
+      - ATTRIBUTE_ENCODING_KEY=issmMB5BfX9GyJIFapnNNtGK/sjn1Cij # 32 bits
+      - GEAR_TRANSLATION_API_URL=https://ask.for.your.domain.com
+      - RAILS_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY_BASE=asdasdasdasdej2454561asdqowieuopqwiekaskldnasodhqiuwheoijafnakscnqoiwheqpsadnmlhfoighoihqwueqwpeqpwokdalsknd1231
+    depends_on:
+      - postgres.db
+      - redis
+    tty: true
+    stdin_open: true
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DATABASE_HOST=postgres.db
+      - DATABASE_PORT=5432
+      - ENCRYPTION_KEY=bc68d47aa1f2103e37cbdd11ae87965d5f6336bc79f35982dfaa385fdf0b7645 # 64 bits
+      - ATTRIBUTE_ENCODING_KEY=issmMB5BfX9GyJIFapnNNtGK/sjn1Cij # 32 bits
+      - GEAR_TRANSLATION_API_URL=https://ask.for.your.domain.com
+      - RAILS_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY_BASE=asdasdasdasdej2454561asdqowieuopqwiekaskldnasodhqiuwheoijafnakscnqoiwheqpsadnmlhfoighoihqwueqwpeqpwokdalsknd1231
+    depends_on:
+      - postgres.db
+      - redis
+      - gt-api-client
+    tty: true
+    stdin_open: true
+  postgres.db:
+    image: postgres
+    volumes:
+      - type: volume
+        source: pgdata
+        target: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  redis:
+    image: redis:5.0.5-alpine
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+
+volumes:
+  pgdata:
+  redis_data:
